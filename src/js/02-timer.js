@@ -20,39 +20,43 @@ defaultDate: new Date(),
 minuteIncrement: 1,
 onClose(selectedDates) {
   let timeNow = Date.now()
-  let deltaTime = selectedDates[0] - timeNow;
+  // let deltaTime = selectedDates[0] - timeNow;
 
-  if(deltaTime < 0){
+  if(timeNow >= selectedDates[0]){
     Notiflix.Notify.failure("Please choose a date in the future")
     startBtn.disabled = true
-  } else{
+  } 
     startBtn.disabled = false
-  
-  }
-
-
-
-
-  function startTimer(){
-    startBtn.disabled = true
-    inputRef.disabled = true
-    liveTimer(selectedDates)
-    timerId = setInterval(() => {
-      liveTimer(selectedDates)
-    }, 1000)
-  }
-
-  startBtn.addEventListener('click', startTimer)
-},
+    selectData = selectedDates[0];
+  },
 };
-function liveTimer(selectedDates){
-  let timeNow = Date.now()
-  let deltaTime = selectedDates[0] - timeNow;
-  if(deltaTime < 1000){
-    clearInterval(timerId)
-  }
-  updateDataTime(deltaTime)
+
+function startTimer(){
+  startBtn.disabled = true
+  inputRef.disabled = true
+  
+  timerId = setInterval(() => {
+    let timeNow = Date.now()
+    let deltaTime = selectData - timeNow;
+    if(deltaTime <= 0){
+      clearInterval(timerId)
+    }
+    updateDataTime(deltaTime)
+  
+  }, 1000)
 }
+
+startBtn.addEventListener('click', startTimer)
+
+
+// function liveTimer(selectedDates){
+//   let timeNow = Date.now()
+//   let deltaTime = selectedDates[0] - timeNow;
+//   if(deltaTime < 1000){
+//     clearInterval(timerId)
+//   }
+//   updateDataTime(deltaTime)
+// }
 
 function updateDataTime(deltaTime){
   const {days, hours, minutes, seconds} = convertMs(deltaTime)
@@ -87,3 +91,4 @@ return { days, hours, minutes, seconds };
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 };
+

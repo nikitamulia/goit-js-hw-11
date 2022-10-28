@@ -10,13 +10,21 @@ function getRandomHexColor() {
     return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
   }
 
-function changeColor(){ timerId = setInterval(()=> {
-document.body.style.backgroundColor = getRandomHexColor()
-startRef.disabled = true;
+function changeColor(){ 
+  startRef.disabled = true;
+  stopRef.disabled = false;
+  switchColor();
+  timerId = setInterval(()=> {
+    switchColor()
 }, 1000);
 }
 
 function stopChangeColor(){
     clearInterval(timerId);
     startRef.disabled = false;
+    stopRef.disabled = true;
+}
+
+function switchColor(){
+  document.body.style.backgroundColor = getRandomHexColor()
 }
