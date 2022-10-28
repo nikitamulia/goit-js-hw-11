@@ -4,6 +4,8 @@ const stopRef = document.querySelector('button[data-stop]');
 startRef.addEventListener('click', changeColor);
 stopRef.addEventListener('click', stopChangeColor);
 
+let timerId = null;
+
 function getRandomHexColor() {
     return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
   }
