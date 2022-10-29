@@ -12,6 +12,7 @@ const secondsFor = document.querySelector('[data-seconds]');
 
 startBtn.disabled = true;
 let timerId = null;
+let selectData;
 
 const options = {
 enableTime: true,
