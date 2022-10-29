@@ -56,6 +56,7 @@ startBtn.addEventListener('click', startTimer)
 //     clearInterval(timerId)
 //   }
 //   updateDataTime(deltaTime)
+// ---
 // }
 
 function updateDataTime(deltaTime){
