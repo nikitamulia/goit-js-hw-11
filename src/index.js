@@ -32,14 +32,18 @@ async function onSubmit(event) {
     const { hits, totalHits } = searchData;
     
     if (hits.length === 0) {
+      loadRef.classList.add('js-load-btn');
+      galleryRef.innerHTML = '';
       Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
       return;
     }
-    Notiflix.Notify.success(`Hooray! We found ${totalHits} images!`);
-    const markup = hits.map(item => createMarkup(item)).join('');
-    galleryRef.innerHTML = markup;
+    
+      Notiflix.Notify.success(`Hooray! We found ${totalHits} images!`);
+      const markup = hits.map(item => createMarkup(item)).join('');
+      galleryRef.innerHTML = markup;
+      
     
     if (totalHits > 40) {
       loadRef.classList.remove('js-load-btn');
@@ -53,19 +57,30 @@ async function onSubmit(event) {
 }
 
 async function onLoadClick() {
-
+  loadRef.classList.add('js-load-btn');
+  setTimeout(() => {
+    timerLoadBtn();
+  }, 2000);
   const response = await getPictures(query);
   const { hits, totalHits } = response;
   
   const markup = hits.map(item => createMarkup(item)).join('');
   galleryRef.insertAdjacentHTML('beforeend', markup);
   lightbox.refresh();
+
+  
+  
   
   const amountOfPages = totalHits / 40 - page;
   if (amountOfPages < 1) {
+   
     loadRef.classList.add('js-load-btn');
     Notiflix.Notify.info(
       "We're sorry, but you've reached the end of search results."
     );
   }
+}
+
+function timerLoadBtn(){
+  loadRef.classList.remove('js-load-btn');
 }
