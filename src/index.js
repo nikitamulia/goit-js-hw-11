@@ -31,7 +31,7 @@ async function onSubmit(event) {
     const searchData = await getPictures(searchQuery);
     const { hits, totalHits } = searchData;
     
-    if (hits.length === 0) {
+    if (totalHits === 0) {
       loadRef.classList.add('js-load-btn');
       galleryRef.innerHTML = '';
       Notiflix.Notify.failure(
@@ -39,10 +39,13 @@ async function onSubmit(event) {
       );
       return;
     }
-    
-      Notiflix.Notify.success(`Hooray! We found ${totalHits} images!`);
-      const markup = hits.map(item => createMarkup(item)).join('');
+      else if(hits.length  > 0){
+        Notiflix.Notify.success(`Hooray! We found ${totalHits} images!`);
+        const markup = hits.map(item => createMarkup(item)).join('');
       galleryRef.innerHTML = markup;
+      }
+     
+      
       
     
     if (totalHits > 40) {
