@@ -40,11 +40,10 @@ async function onSubmit(event) {
       return;
     }
       else if(hits.length  > 0){
-        Notiflix.Notify.success(`Hooray! We found ${totalHits} images!`);
         const markup = hits.map(item => createMarkup(item)).join('');
-      galleryRef.innerHTML = markup;
+        galleryRef.innerHTML = markup;
       }
-     
+      Notiflix.Notify.success(`Hooray! We found ${totalHits} images!`);
       
       
     
