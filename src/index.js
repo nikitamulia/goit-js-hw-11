@@ -22,7 +22,7 @@ let lightbox = new SimpleLightbox('.gallery a', {
 async function onSubmit(event) {
   event.preventDefault();
   const searchQuery = event.currentTarget.elements.searchQuery.value.trim().toLowerCase();
-  page = 1;
+  
   if (!searchQuery) {
     Notiflix.Notify.failure('Enter a search query!');
     return;
@@ -49,7 +49,7 @@ async function onSubmit(event) {
     
     if (totalHits > 40) {
       loadRef.classList.remove('js-load-btn');
-      page += 1;
+     
     }
     lightbox.refresh();
   } catch (error) {
