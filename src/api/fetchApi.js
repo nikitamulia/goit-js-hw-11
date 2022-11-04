@@ -18,7 +18,6 @@ export async function getPictures(searchQuery) {
     page += 1;
     return response.data;
   } catch (error) {
-    Notiflix.Notify.failure('Something went wrong! Please retry');
-    console.log(error);
+    throw new Error(error)
   }
 }

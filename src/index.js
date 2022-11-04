@@ -59,30 +59,39 @@ async function onSubmit(event) {
 }
 
 async function onLoadClick() {
-  loadRef.classList.add('js-load-btn');
-  setTimeout(() => {
-    timerLoadBtn();
-  }, 2000);
-  const response = await getPictures(query);
-  const { hits, totalHits } = response;
+  loadRef.disabled = true;
+  // loadRef.classList.add('js-load-btn');
+  // setTimeout(() => {
+  //   timerLoadBtn();
+  // }, 2000);
+  try{
+    const response = await getPictures(query);
+    const { hits, totalHits } = response;
+    
+    const markup = hits.map(item => createMarkup(item)).join('');
+    galleryRef.insertAdjacentHTML('beforeend', markup);
+    lightbox.refresh();
   
-  const markup = hits.map(item => createMarkup(item)).join('');
-  galleryRef.insertAdjacentHTML('beforeend', markup);
-  lightbox.refresh();
-
-  
-  
-  
-  const amountOfPages = totalHits / 40 - page;
-  if (amountOfPages < 1) {
-   
-    loadRef.classList.add('js-load-btn');
-    Notiflix.Notify.info(
-      "We're sorry, but you've reached the end of search results."
-    );
+    
+    
+    
+    const amountOfPages = totalHits / 40 - page;
+    loadRef.disabled = false;
+    if (amountOfPages < 1) {
+     
+      loadRef.classList.add('js-load-btn');
+      Notiflix.Notify.info(
+        "We're sorry, but you've reached the end of search results."
+      );
+    }
   }
+  catch(error){
+    Notiflix.Notify.failure('Something went wrong! Please retry');
+    console.log(error);
+  }
+ 
 }
 
-function timerLoadBtn(){
-  loadRef.classList.remove('js-load-btn');
-}
+// function timerLoadBtn(){
+//   loadRef.classList.remove('js-load-btn');
+// }

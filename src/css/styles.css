@@ -22,6 +22,10 @@ body {
   border-radius: 8px;
 }
 
+.btn:disabled{
+  background-color: chocolate;
+}
+
 .search-input {
   min-width: 180px;
   padding-top: 10px;
